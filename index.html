@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Drag and Drop</title>
+<style>
+  .draggable {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    cursor: grab;
+  }
+  #obj1 { background-color: red; top: 50px; left: 50px; }
+  #obj2 { background-color: green; top: 50px; left: 200px; }
+  #obj3 { background-color: blue; top: 50px; left: 350px; }
+</style>
+</head>
+<body>
+
+<div id="obj1" class="draggable"></div>
+<div id="obj2" class="draggable"></div>
+<div id="obj3" class="draggable"></div>
+
+<script>
+let selected = null;
+let offsetX = 0;
+let offsetY = 0;
+
+document.querySelectorAll('.draggable').forEach(el => {
+  el.addEventListener('mousedown', (e) => {
+    selected = el;
+    offsetX = e.clientX - el.offsetLeft;
+    offsetY = e.clientY - el.offsetTop;
+    el.style.cursor = "grabbing";
+  });
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (selected) {
+    selected.style.left = (e.clientX - offsetX) + 'px';
+    selected.style.top = (e.clientY - offsetY) + 'px';
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  if (selected) {
+    selected.style.cursor = "grab";
+    selected = null;
+  }
+});
+</script>
+
+</body>
+</html>
