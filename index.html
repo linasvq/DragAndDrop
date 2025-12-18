@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag Objects</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #eee;
+            position: relative;
+        }
+
+        .object {
+            position: absolute;
+            user-select: none;
+            cursor: grab;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 0, 0, 0.6);
+            top: 40px;
+            left: 40px;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 255, 0, 0.6);
+            border-radius: 50%;
+            top: 200px;
+            left: 200px;
+        }
+
+        .rectangle {
+            width: 150px;
+            height: 80px;
+            background: rgba(0, 0, 255, 0.6);
+            top: 350px;
+            left: 120px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="object square"></div>
+<div class="object circle"></div>
+<div class="object rectangle"></div>
+
+<script>
+    let dragged = null;
+    let shiftX = 0;
+    let shiftY = 0;
+
+    document.addEventListener('mousedown', e => {
+        if (!e.target.classList.contains('object')) return;
+
+        dragged = e.target;
+        shiftX = e.clientX - dragged.offsetLeft;
+        shiftY = e.clientY - dragged.offsetTop;
+    });
+
+    document.addEventListener('mousemove', e => {
+        if (!dragged) return;
+
+        dragged.style.left = (e.clientX - shiftX) + 'px';
+        dragged.style.top = (e.clientY - shiftY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        dragged = null;
+    });
+</script>
+
+</body>
+</html>
